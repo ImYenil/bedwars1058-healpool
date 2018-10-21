@@ -7,6 +7,8 @@ import com.andrei1058.bedwars.configuration.ConfigPath;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
@@ -44,12 +46,20 @@ public class HealPoolTask extends BukkitRunnable {
     @Override
     public void run() {
         Bukkit.broadcastMessage("TASK RUN");
-        for (int x = blocks; x > 0; x--) {
-            Random r = new Random();
-            Random r2 = new Random();
-            Random r3 = new Random();
-            Bukkit.broadcastMessage("TASK EFFECT");
-            bwt.getSpawn().getWorld().playEffect(new Location(bwt.getSpawn().getWorld(), r2.nextInt(maxX) + minX, r3.nextInt(maxY) + minY, r.nextInt(maxZ) + minZ), Effect.VILLAGER_PLANT_GROW, 1f);
+        Block b;
+        Random r = new Random();
+        for (int x = minX; x < maxX; x++){
+            for (int y = minY; y < maxY; y++){
+                for (int z = minZ; z < maxZ; z++){
+                    b = new Location(bwt.getSpawn().getWorld(), x, y, z).getBlock();
+                    if (b.getType() != Material.AIR) continue;
+                    Bukkit.broadcastMessage("TASK EFFECT");
+                    int chance = r.nextInt(2);
+                    if (chance == 0){
+                        b.getWorld().playEffect(b.getLocation(), Effect.VILLAGER_PLANT_GROW, 1F);
+                    }
+                }
+            }
         }
     }
 
