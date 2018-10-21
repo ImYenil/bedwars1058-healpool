@@ -22,6 +22,8 @@ public class Main extends JavaPlugin implements Listener {
             return;
         }
 
+        Bukkit.getPluginManager().registerEvents(this, this);
+
     }
 
     @EventHandler
