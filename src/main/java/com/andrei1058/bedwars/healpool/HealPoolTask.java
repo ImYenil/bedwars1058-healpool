@@ -28,13 +28,14 @@ public class HealPoolTask extends BukkitRunnable {
     public HealPoolTask(BedWarsTeam bwt) {
         this.bwt = bwt;
         int radius = bwt.getArena().getCm().getInt(ConfigPath.ARENA_ISLAND_RADIUS);
+        Bukkit.broadcastMessage("RADIUS IS "+radius);
         this.maxX = bwt.getSpawn().getBlockX() + radius;
         this.minX = bwt.getSpawn().getBlockX() - radius;
         this.maxY = bwt.getSpawn().getBlockY() + radius;
         this.minY = bwt.getSpawn().getBlockY() - radius;
         this.maxZ = bwt.getSpawn().getBlockZ() + radius;
         this.minZ = bwt.getSpawn().getBlockZ() - radius;
-        this.blocks = radius ^ radius;
+        this.blocks = 200;
         this.arena = bwt.getArena();
         this.runTaskTimer(Main.plugin, 0, 20L);
         healPoolTasks.add(this);
@@ -69,7 +70,7 @@ public class HealPoolTask extends BukkitRunnable {
     }
 
     public static void removeForArena(String a){
-        for (HealPoolTask hpt : healPoolTasks) {
+        for (HealPoolTask hpt : new ArrayList<>(healPoolTasks)) {
             if (hpt.getArena().getWorldName().equals(a)){
                 healPoolTasks.remove(hpt);
                 hpt.cancel();
