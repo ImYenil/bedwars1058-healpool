@@ -1,0 +1,5 @@
+main: com.andrei1058.bedwars.healpool.Main
+name: BedWars1058-HealPool
+version: ${project.version}
+authors: andrei1058
+description: Adds particles to the heal pool region.
