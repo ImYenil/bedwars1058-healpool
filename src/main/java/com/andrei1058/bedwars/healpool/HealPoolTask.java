@@ -21,7 +21,6 @@ public class HealPoolTask extends BukkitRunnable {
     private int maxX, minX;
     private int maxY, minY;
     private int maxZ, minZ;
-    private int blocks;
     private Arena arena;
 
     private static List<HealPoolTask> healPoolTasks = new ArrayList<>();
@@ -29,22 +28,19 @@ public class HealPoolTask extends BukkitRunnable {
     public HealPoolTask(BedWarsTeam bwt) {
         this.bwt = bwt;
         int radius = bwt.getArena().getCm().getInt(ConfigPath.ARENA_ISLAND_RADIUS);
-        Bukkit.broadcastMessage("RADIUS IS "+radius);
-        this.maxX = bwt.getSpawn().getBlockX() + radius;
-        this.minX = bwt.getSpawn().getBlockX() - radius;
-        this.maxY = bwt.getSpawn().getBlockY() + radius;
-        this.minY = bwt.getSpawn().getBlockY() - radius;
-        this.maxZ = bwt.getSpawn().getBlockZ() + radius;
-        this.minZ = bwt.getSpawn().getBlockZ() - radius;
-        this.blocks = 200;
+        this.maxX = bwt.getSpawn().clone().add(radius, 0, 0).getBlockX();
+        this.minX = bwt.getSpawn().clone().subtract(radius, 0, 0).getBlockX();
+        this.maxY = bwt.getSpawn().clone().add(0, radius, 0).getBlockY();
+        this.minY = bwt.getSpawn().clone().subtract(0, radius, 0).getBlockY();
+        this.maxZ = bwt.getSpawn().clone().add(0, 0, radius).getBlockZ();
+        this.minZ = bwt.getSpawn().clone().subtract(0, 0, radius).getBlockZ();
         this.arena = bwt.getArena();
-        this.runTaskTimer(Main.plugin, 0, 20L);
+        this.runTaskTimer(Main.plugin, 0, 40L);
         healPoolTasks.add(this);
     }
 
     @Override
     public void run() {
-        Bukkit.broadcastMessage("TASK RUN");
         Block b;
         Random r = new Random();
         for (int x = minX; x < maxX; x++){
@@ -52,7 +48,6 @@ public class HealPoolTask extends BukkitRunnable {
                 for (int z = minZ; z < maxZ; z++){
                     b = new Location(bwt.getSpawn().getWorld(), x, y, z).getBlock();
                     if (b.getType() != Material.AIR) continue;
-                    Bukkit.broadcastMessage("TASK EFFECT");
                     int chance = r.nextInt(2);
                     if (chance == 0){
                         for (Player p : bwt.getMembers()){
