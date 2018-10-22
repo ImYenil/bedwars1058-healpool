@@ -1,6 +1,5 @@
 package com.andrei1058.bedwars.healpool;
 
-import com.andrei1058.bedwars.Main;
 import com.andrei1058.bedwars.arena.Arena;
 import com.andrei1058.bedwars.arena.BedWarsTeam;
 import com.andrei1058.bedwars.configuration.ConfigPath;
@@ -51,7 +50,7 @@ public class HealPoolTask extends BukkitRunnable {
                     int chance = r.nextInt(2);
                     if (chance == 0){
                         for (Player p : bwt.getMembers()){
-                            com.andrei1058.bedwars.healpool.Main.getVersionSupport().playEffect(p);
+                            Main.getVersionSupport().playEffect(p);
                         }
                     }
                 }

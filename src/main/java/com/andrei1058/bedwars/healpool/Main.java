@@ -16,9 +16,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Main extends JavaPlugin implements Listener {
 
     private static VersionSupport versionSupport;
+    public static Main plugin;
 
     @Override
     public void onEnable() {
+
+        plugin = this;
 
         //Check dependencies
         if (Bukkit.getPluginManager().getPlugin("BedWars1058") == null) {
