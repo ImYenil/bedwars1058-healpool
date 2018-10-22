@@ -47,12 +47,12 @@ public class HealPoolTask extends BukkitRunnable {
                 for (int z = minZ; z < maxZ; z++){
                     b = new Location(bwt.getSpawn().getWorld(), x, y, z).getBlock();
                     if (b.getType() != Material.AIR) continue;
-                    int chance = r.nextInt(2);
-                    if (chance == 0){
+                    //int chance = r.nextInt(2);
+                    //if (chance == 0){
                         for (Player p : bwt.getMembers()){
                             Main.getVersionSupport().playEffect(p);
                         }
-                    }
+                    //}
                 }
             }
         }
