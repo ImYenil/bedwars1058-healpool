@@ -5,6 +5,7 @@ import com.andrei1058.bedwars.api.events.GameEndEvent;
 import com.andrei1058.bedwars.api.events.UpgradeBuyEvent;
 import com.andrei1058.bedwars.arena.Arena;
 import com.andrei1058.bedwars.arena.BedWarsTeam;
+import com.andrei1058.bedwars.healpool.versionsupport.Newer;
 import com.andrei1058.bedwars.healpool.versionsupport.VersionSupport;
 import com.andrei1058.bedwars.healpool.versionsupport.v1_8_R3;
 import org.bukkit.Bukkit;
@@ -28,11 +29,15 @@ public class Main extends JavaPlugin implements Listener {
 
         boolean supported = true;
         switch (com.andrei1058.bedwars.Main.getServerVersion()) {
+            case "v1_8_R2":
+            case "v1_8_R1":
+                supported = false;
+                break;
             case "v1_8_R3":
                 versionSupport = new v1_8_R3();
                 break;
             default:
-                supported = false;
+                versionSupport = new Newer();
                 break;
         }
 

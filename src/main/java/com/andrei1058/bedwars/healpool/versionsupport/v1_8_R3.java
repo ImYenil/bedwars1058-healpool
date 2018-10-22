@@ -1,17 +1,17 @@
 package com.andrei1058.bedwars.healpool.versionsupport;
 
-import net.minecraft.server.v1_8_R3.EntityPlayer;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
+import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 public class v1_8_R3 implements VersionSupport {
     @Override
-    public void playEffect(Player player) {
+    public void playEffect(Player p) {
+        Location loc = p.getLocation();
+        PacketPlayOutWorldParticles pwp = new PacketPlayOutWorldParticles(EnumParticle.VILLAGER_HAPPY, true, (float) loc.getX(), (float) loc.getY(), (float) loc.getZ(), (float) 0, (float) 0, (float) 0, (float) 0, 1);
 
-        EntityPlayer p = ((CraftPlayer)player).getHandle();
-        PacketPlayOutWorldParticles pwp = new PacketPlayOutWorldParticles(EnumParticle.VILLAGER_HAPPY, true, 1, 1,1 ,1, 1, 1, 1, 1, 1);
-        p.playerConnection.sendPacket(pwp);
+        ((CraftPlayer) p).getHandle().playerConnection.sendPacket(pwp);
     }
 }
