@@ -18,6 +18,19 @@
                     <target>8</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
         <resources>
             <resource>
@@ -37,21 +50,23 @@
             <url>http://ci.andrei1058.com:8081/repository/BedWars1058/</url>
         </repository>
     </repositories>
+
     <dependencies>
         <!--Spigot API-->
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.13-R0.1-SNAPSHOT</version>
+            <version>1.8.8-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <!--Bukkit API-->
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.13-R0.1-SNAPSHOT</version>
+            <version>1.8.8-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+
         <!--BedWars API-->
         <dependency>
             <groupId>com.andrei1058</groupId>
@@ -59,8 +74,14 @@
             <version>API11</version>
             <scope>provided</scope>
         </dependency>
-    </dependencies>
 
+        <dependency>
+            <groupId>org.bukkit</groupId>
+            <artifactId>craftbukkit</artifactId>
+            <version>v1_8_R3</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 
 
 </project>

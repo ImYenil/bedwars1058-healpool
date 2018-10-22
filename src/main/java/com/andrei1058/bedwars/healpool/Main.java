@@ -5,12 +5,16 @@ import com.andrei1058.bedwars.api.events.GameEndEvent;
 import com.andrei1058.bedwars.api.events.UpgradeBuyEvent;
 import com.andrei1058.bedwars.arena.Arena;
 import com.andrei1058.bedwars.arena.BedWarsTeam;
+import com.andrei1058.bedwars.healpool.versionsupport.VersionSupport;
+import com.andrei1058.bedwars.healpool.versionsupport.v1_8_R3;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin implements Listener {
+
+    private static VersionSupport versionSupport;
 
     @Override
     public void onEnable() {
@@ -19,6 +23,22 @@ public class Main extends JavaPlugin implements Listener {
         if (Bukkit.getPluginManager().getPlugin("BedWars1058") == null) {
             this.getLogger().severe("I can't run without BedWars1058 Plugin!");
             this.setEnabled(false);
+            return;
+        }
+
+        boolean supported = true;
+        switch (com.andrei1058.bedwars.Main.getServerVersion()) {
+            case "v1_8_R3":
+                versionSupport = new v1_8_R3();
+                break;
+            default:
+                supported = false;
+                break;
+        }
+
+        if (!supported){
+            getLogger().severe("Your server version is not supported!");
+            setEnabled(false);
             return;
         }
 
@@ -43,13 +63,16 @@ public class Main extends JavaPlugin implements Listener {
     }
 
     @EventHandler
-    public void onDisable(ArenaDisableEvent e){
+    public void onDisable(ArenaDisableEvent e) {
         HealPoolTask.removeForArena(e.getArenaName());
     }
 
     @EventHandler
-    public void onEnd(GameEndEvent e){
+    public void onEnd(GameEndEvent e) {
         HealPoolTask.removeForArena(e.getArena());
     }
 
+    public static VersionSupport getVersionSupport() {
+        return versionSupport;
+    }
 }

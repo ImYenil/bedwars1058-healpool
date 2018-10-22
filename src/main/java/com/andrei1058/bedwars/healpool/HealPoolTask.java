@@ -5,14 +5,13 @@ import com.andrei1058.bedwars.arena.Arena;
 import com.andrei1058.bedwars.arena.BedWarsTeam;
 import com.andrei1058.bedwars.configuration.ConfigPath;
 import org.bukkit.Bukkit;
-import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -56,7 +55,9 @@ public class HealPoolTask extends BukkitRunnable {
                     Bukkit.broadcastMessage("TASK EFFECT");
                     int chance = r.nextInt(2);
                     if (chance == 0){
-                        b.getWorld().playEffect(b.getLocation(), Effect.VILLAGER_PLANT_GROW, 1F);
+                        for (Player p : bwt.getMembers()){
+                            com.andrei1058.bedwars.healpool.Main.getVersionSupport().playEffect(p);
+                        }
                     }
                 }
             }
