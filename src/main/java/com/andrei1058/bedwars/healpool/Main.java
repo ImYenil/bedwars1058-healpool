@@ -56,15 +56,12 @@ public class Main extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onTeamUpgrade(UpgradeBuyEvent e) {
-        Bukkit.broadcastMessage("UPGRADE EVENT TRIGGERED!");
         if (e.getTeamUpgrade().getName().equalsIgnoreCase("healPool")) {
-            Bukkit.broadcastMessage("UPGRADE EVENT TRIGGERED IS HEAL POOL");
             Arena a = Arena.getArenaByPlayer(e.getBuyer());
             if (a == null) return;
             BedWarsTeam bwt = a.getTeam(e.getBuyer());
             if (bwt == null) return;
             if (!HealPoolTask.exists(a, bwt)) {
-                Bukkit.broadcastMessage("UPGRADE EVENT TRIGGERED NEW TASK");
                 new HealPoolTask(bwt);
             }
         }

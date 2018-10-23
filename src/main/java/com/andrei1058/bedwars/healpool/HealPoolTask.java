@@ -41,7 +41,6 @@ public class HealPoolTask extends BukkitRunnable {
 
     @Override
     public void run() {
-        Block b;
         for (int x = minX; x < maxX; x++) {
             for (int y = minY; y < maxY; y++) {
                 for (int z = minZ; z < maxZ; z++) {
