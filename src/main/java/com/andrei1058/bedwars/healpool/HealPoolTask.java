@@ -3,7 +3,6 @@ package com.andrei1058.bedwars.healpool;
 import com.andrei1058.bedwars.arena.Arena;
 import com.andrei1058.bedwars.arena.BedWarsTeam;
 import com.andrei1058.bedwars.configuration.ConfigPath;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -22,7 +21,7 @@ public class HealPoolTask extends BukkitRunnable {
     private int maxZ, minZ;
     private Arena arena;
     private Random r = new Random();
-    private Block b;
+    private Location l;
 
     private static List<HealPoolTask> healPoolTasks = new ArrayList<>();
 
@@ -46,12 +45,12 @@ public class HealPoolTask extends BukkitRunnable {
         for (int x = minX; x < maxX; x++) {
             for (int y = minY; y < maxY; y++) {
                 for (int z = minZ; z < maxZ; z++) {
-                    b = new Location(bwt.getSpawn().getWorld(), x, y, z).getBlock();
-                    if (b.getType() != Material.AIR) continue;
-                    int chance = r.nextInt(2);
+                    l = new Location(bwt.getSpawn().getWorld(), x, y, z);
+                    if (l.getBlock().getType() != Material.AIR) continue;
+                    int chance = r.nextInt(5);
                     if (chance == 0) {
                         for (Player p : bwt.getMembers()) {
-                            Main.getVersionSupport().playEffect(p, b.getLocation());
+                            Main.getVersionSupport().playEffect(p, l);
                         }
                     }
                 }
