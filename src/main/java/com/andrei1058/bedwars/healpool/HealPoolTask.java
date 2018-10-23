@@ -20,14 +20,16 @@ public class HealPoolTask extends BukkitRunnable {
     private int maxX, minX;
     private int maxY, minY;
     private int maxZ, minZ;
+    private int radius;
     private Arena arena;
     private Random r = new Random();
+    private Block b;
 
     private static List<HealPoolTask> healPoolTasks = new ArrayList<>();
 
     public HealPoolTask(BedWarsTeam bwt) {
         this.bwt = bwt;
-        int radius = bwt.getArena().getCm().getInt(ConfigPath.ARENA_ISLAND_RADIUS);
+        this.radius = bwt.getArena().getCm().getInt(ConfigPath.ARENA_ISLAND_RADIUS);
         this.maxX = Math.max(bwt.getSpawn().clone().add(radius, 0, 0).getBlockX(), bwt.getSpawn().clone().subtract(radius, 0, 0).getBlockX());
         this.minX = Math.min(bwt.getSpawn().clone().add(radius, 0, 0).getBlockX(), bwt.getSpawn().clone().subtract(radius, 0, 0).getBlockX());
         this.maxY = Math.max(bwt.getSpawn().clone().add(0, radius, 0).getBlockY(), bwt.getSpawn().clone().subtract(0, radius, 0).getBlockY());
@@ -35,26 +37,17 @@ public class HealPoolTask extends BukkitRunnable {
         this.maxZ = Math.max(bwt.getSpawn().clone().add(0, 0, radius).getBlockZ(), bwt.getSpawn().clone().subtract(0, 0, radius).getBlockZ());
         this.minZ = Math.min(bwt.getSpawn().clone().add(0, 0, radius).getBlockZ(), bwt.getSpawn().clone().subtract(0, 0, radius).getBlockZ());
         this.arena = bwt.getArena();
-        this.runTaskTimer(Main.plugin, 0, 40L);
+        this.runTaskTimer(Main.plugin, 0, 1L);
         healPoolTasks.add(this);
     }
 
     @Override
     public void run() {
-        Block b;
-        for (int x = minX; x < maxX; x++){
-            for (int y = minY; y < maxY; y++){
-                for (int z = minZ; z < maxZ; z++){
-                    b = new Location(bwt.getSpawn().getWorld(), x, y, z).getBlock();
-                    if (b.getType() != Material.AIR) continue;
-                    //int chance = r.nextInt(2);
-                    //if (chance == 0){
-                        for (Player p : bwt.getMembers()){
-                            Main.getVersionSupport().playEffect(p);
-                        }
-                    //}
-                }
-            }
+        b = new Location(bwt.getSpawn().getWorld(), r.nextInt(minX)+radius, r.nextInt(minY)+radius, r.nextInt(minZ)+radius).getBlock();
+        if (b.getType() != Material.AIR) return;
+        for (Player p : bwt.getMembers()) {
+            Main.getVersionSupport().playEffect(p);
+
         }
     }
 
@@ -65,18 +58,18 @@ public class HealPoolTask extends BukkitRunnable {
         return false;
     }
 
-    public static void removeForArena(Arena a){
+    public static void removeForArena(Arena a) {
         for (HealPoolTask hpt : healPoolTasks) {
-            if (hpt.getArena() == a){
+            if (hpt.getArena() == a) {
                 healPoolTasks.remove(hpt);
                 hpt.cancel();
             }
         }
     }
 
-    public static void removeForArena(String a){
+    public static void removeForArena(String a) {
         for (HealPoolTask hpt : new ArrayList<>(healPoolTasks)) {
-            if (hpt.getArena().getWorldName().equals(a)){
+            if (hpt.getArena().getWorldName().equals(a)) {
                 healPoolTasks.remove(hpt);
                 hpt.cancel();
             }
