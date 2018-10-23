@@ -46,8 +46,7 @@ public class HealPoolTask extends BukkitRunnable {
         b = new Location(bwt.getSpawn().getWorld(), r.nextInt(minX)+radius, r.nextInt(minY)+radius, r.nextInt(minZ)+radius).getBlock();
         if (b.getType() != Material.AIR) return;
         for (Player p : bwt.getMembers()) {
-            Main.getVersionSupport().playEffect(p);
-
+            Main.getVersionSupport().playEffect(p, b.getLocation());
         }
     }
 

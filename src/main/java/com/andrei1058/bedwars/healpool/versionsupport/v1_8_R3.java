@@ -8,10 +8,8 @@ import org.bukkit.entity.Player;
 
 public class v1_8_R3 implements VersionSupport {
     @Override
-    public void playEffect(Player p) {
-        Location loc = p.getLocation();
+    public void playEffect(Player p, Location loc) {
         PacketPlayOutWorldParticles pwp = new PacketPlayOutWorldParticles(EnumParticle.VILLAGER_HAPPY, true, (float) loc.getX(), (float) loc.getY(), (float) loc.getZ(), (float) 0, (float) 0, (float) 0, (float) 0, 1);
-
         ((CraftPlayer) p).getHandle().playerConnection.sendPacket(pwp);
     }
 }
