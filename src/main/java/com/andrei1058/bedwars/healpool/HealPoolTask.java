@@ -58,14 +58,14 @@ public class HealPoolTask extends BukkitRunnable {
     }
 
     public static boolean exists(Arena arena, BedWarsTeam bwt) {
-        for (HealPoolTask hpt : healPoolTasks) {
+        for (HealPoolTask hpt : new ArrayList<>(healPoolTasks)) {
             if (hpt.getArena() == arena && hpt.getBwt() == bwt) return true;
         }
         return false;
     }
 
     public static void removeForArena(Arena a) {
-        for (HealPoolTask hpt : healPoolTasks) {
+        for (HealPoolTask hpt : new ArrayList<>(healPoolTasks)) {
             if (hpt.getArena() == a) {
                 healPoolTasks.remove(hpt);
                 hpt.cancel();
