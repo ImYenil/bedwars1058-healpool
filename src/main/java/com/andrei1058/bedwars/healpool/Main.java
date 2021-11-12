@@ -1,10 +1,11 @@
 package com.andrei1058.bedwars.healpool;
 
-import com.andrei1058.bedwars.api.events.ArenaDisableEvent;
-import com.andrei1058.bedwars.api.events.GameEndEvent;
-import com.andrei1058.bedwars.api.events.UpgradeBuyEvent;
+import com.andrei1058.bedwars.api.arena.IArena;
+import com.andrei1058.bedwars.api.arena.team.ITeam;
+import com.andrei1058.bedwars.api.events.gameplay.GameEndEvent;
+import com.andrei1058.bedwars.api.events.server.ArenaDisableEvent;
+import com.andrei1058.bedwars.api.events.upgrades.UpgradeBuyEvent;
 import com.andrei1058.bedwars.arena.Arena;
-import com.andrei1058.bedwars.arena.BedWarsTeam;
 import com.andrei1058.bedwars.healpool.versionsupport.Newer;
 import com.andrei1058.bedwars.healpool.versionsupport.VersionSupport;
 import com.andrei1058.bedwars.healpool.versionsupport.v1_8_R3;
@@ -31,7 +32,7 @@ public class Main extends JavaPlugin implements Listener {
         }
 
         boolean supported = true;
-        switch (com.andrei1058.bedwars.Main.getServerVersion()) {
+        switch (com.andrei1058.bedwars.BedWars.getServerVersion()) {
             case "v1_8_R2":
             case "v1_8_R1":
                 supported = false;
@@ -56,13 +57,12 @@ public class Main extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onTeamUpgrade(UpgradeBuyEvent e) {
-        net.minecraft.server.v1_9_R1.EnumParticle.a();
         net.minecraft.server.v1_8_R3.EnumParticle.a();
         org.bukkit.craftbukkit.v1_8_R3.inventory.CraftContainer.c(1);
         if (e.getTeamUpgrade().getName().equalsIgnoreCase("healPool")) {
-            Arena a = Arena.getArenaByPlayer(e.getBuyer());
+            IArena a = Arena.getArenaByPlayer(e.getPlayer());
             if (a == null) return;
-            BedWarsTeam bwt = a.getTeam(e.getBuyer());
+            ITeam bwt = a.getTeam(e.getPlayer());
             if (bwt == null) return;
             if (!HealPoolTask.exists(a, bwt)) {
                 new HealPoolTask(bwt);

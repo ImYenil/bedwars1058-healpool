@@ -1,11 +1,10 @@
 package com.andrei1058.bedwars.healpool;
 
-import com.andrei1058.bedwars.arena.Arena;
-import com.andrei1058.bedwars.arena.BedWarsTeam;
-import com.andrei1058.bedwars.configuration.ConfigPath;
+import com.andrei1058.bedwars.api.arena.IArena;
+import com.andrei1058.bedwars.api.arena.team.ITeam;
+import com.andrei1058.bedwars.api.configuration.ConfigPath;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -15,19 +14,19 @@ import java.util.Random;
 
 public class HealPoolTask extends BukkitRunnable {
 
-    private BedWarsTeam bwt;
-    private int maxX, minX;
-    private int maxY, minY;
-    private int maxZ, minZ;
-    private Arena arena;
-    private Random r = new Random();
+    private final ITeam bwt;
+    private final int maxX, minX;
+    private final int maxY, minY;
+    private final int maxZ, minZ;
+    private final IArena arena;
+    private final Random r = new Random();
     private Location l;
 
-    private static List<HealPoolTask> healPoolTasks = new ArrayList<>();
+    private final static List<HealPoolTask> healPoolTasks = new ArrayList<>();
 
-    public HealPoolTask(BedWarsTeam bwt) {
+    public HealPoolTask(ITeam bwt) {
         this.bwt = bwt;
-        int radius = bwt.getArena().getCm().getInt(ConfigPath.ARENA_ISLAND_RADIUS);
+        int radius = bwt.getArena().getConfig().getInt(ConfigPath.ARENA_ISLAND_RADIUS);
         this.maxX = Math.max(bwt.getSpawn().clone().add(radius, 0, 0).getBlockX(), bwt.getSpawn().clone().subtract(radius, 0, 0).getBlockX());
         this.minX = Math.min(bwt.getSpawn().clone().add(radius, 0, 0).getBlockX(), bwt.getSpawn().clone().subtract(radius, 0, 0).getBlockX());
         this.maxY = Math.max(bwt.getSpawn().clone().add(0, radius, 0).getBlockY(), bwt.getSpawn().clone().subtract(0, radius, 0).getBlockY());
@@ -57,14 +56,14 @@ public class HealPoolTask extends BukkitRunnable {
         }
     }
 
-    public static boolean exists(Arena arena, BedWarsTeam bwt) {
+    public static boolean exists(IArena arena, ITeam bwt) {
         for (HealPoolTask hpt : new ArrayList<>(healPoolTasks)) {
             if (hpt.getArena() == arena && hpt.getBwt() == bwt) return true;
         }
         return false;
     }
 
-    public static void removeForArena(Arena a) {
+    public static void removeForArena(IArena a) {
         for (HealPoolTask hpt : new ArrayList<>(healPoolTasks)) {
             if (hpt.getArena() == a) {
                 healPoolTasks.remove(hpt);
@@ -82,11 +81,11 @@ public class HealPoolTask extends BukkitRunnable {
         }
     }
 
-    public BedWarsTeam getBwt() {
+    public ITeam getBwt() {
         return bwt;
     }
 
-    public Arena getArena() {
+    public IArena getArena() {
         return arena;
     }
 }

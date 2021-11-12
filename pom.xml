@@ -6,7 +6,7 @@
 
     <groupId>com.andrei1058.bedwars</groupId>
     <artifactId>healthpool</artifactId>
-    <version>1.1</version>
+    <version>1.2</version>
 
     <build>
         <plugins>
@@ -46,6 +46,12 @@
             <version>1.13-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot</artifactId>
+            <version>1.8.8-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
         <!--Bukkit API-->
         <dependency>
             <groupId>org.bukkit</groupId>
@@ -58,31 +64,10 @@
         <dependency>
             <groupId>com.andrei1058</groupId>
             <artifactId>bedwars</artifactId>
-            <version>API11</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>craftbukkit</artifactId>
-            <version>v1_8_R3</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>v188R3</artifactId>
             <version>latest</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>v19R1</artifactId>
-            <version>latest</version>
-            <scope>provided</scope>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/bedwars-plugin-21.11.jar</systemPath>
         </dependency>
     </dependencies>
-
 
 </project>
