@@ -57,8 +57,6 @@ public class Main extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onTeamUpgrade(UpgradeBuyEvent e) {
-        net.minecraft.server.v1_8_R3.EnumParticle.a();
-        org.bukkit.craftbukkit.v1_8_R3.inventory.CraftContainer.c(1);
         if (e.getTeamUpgrade().getName().equalsIgnoreCase("healPool")) {
             IArena a = Arena.getArenaByPlayer(e.getPlayer());
             if (a == null) return;
