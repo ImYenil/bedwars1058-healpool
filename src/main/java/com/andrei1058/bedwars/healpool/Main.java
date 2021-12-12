@@ -57,7 +57,7 @@ public class Main extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onTeamUpgrade(UpgradeBuyEvent e) {
-        if (e.getTeamUpgrade().getName().equalsIgnoreCase("healPool")) {
+        if (e.getTeamUpgrade().getName().equalsIgnoreCase("upgrade-heal-pool")) {
             IArena a = Arena.getArenaByPlayer(e.getPlayer());
             if (a == null) return;
             ITeam bwt = a.getTeam(e.getPlayer());
